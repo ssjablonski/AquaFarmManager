@@ -24,6 +24,7 @@ function Dashboard() {
             {modules.map((module, index) => (
                 <ModuleTile
                     key={module.id}
+                    id={module.id}
                     name={module.name}
                     targetTemp={module.targetTemperature}
                     available={module.available}

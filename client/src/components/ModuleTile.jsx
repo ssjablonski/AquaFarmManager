@@ -1,13 +1,20 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const ModuleTile = ({ name, targetTemp, available }) => {
+const ModuleTile = ({ id, name, targetTemp, available }) => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(`/module/${id}`);
+    };
+
     return (
         <div
-            // sm:text-blue-200 md:text-yellow-400 lg:text-pink-400 xl:text-purple-400
-            className={`flex min-h-32 w-full min-w-80 max-w-80 rounded-lg p-2 dark:text-white ${
+            onClick={handleClick}
+            className={`flex min-h-32 w-full min-w-80 max-w-80 cursor-pointer rounded-lg p-2 dark:text-white ${
                 available
-                    ? "bg-gradient-to-r from-green-100 to-green-500 dark:bg-gradient-to-r dark:from-green-300 dark:to-green-700"
-                    : "bg-gradient-to-r from-red-100 to-red-600 dark:bg-gradient-to-r dark:from-red-300 dark:to-red-600"
+                    ? "bg-gradient-to-r from-green-100 to-green-500 hover:from-green-200 hover:to-green-600 dark:bg-gradient-to-r dark:from-green-300 dark:to-green-700 dark:hover:from-green-400 dark:hover:to-green-800"
+                    : "bg-gradient-to-r from-red-100 to-red-600 hover:from-red-200 hover:to-red-700 dark:bg-gradient-to-r dark:from-red-300 dark:to-red-600 dark:hover:from-red-400 dark:hover:to-red-700"
             }`}
         >
             <div className="flex w-3/5 flex-col px-4">

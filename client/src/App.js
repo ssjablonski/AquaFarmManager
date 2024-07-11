@@ -3,6 +3,7 @@ import "./App.css";
 import NavBar from "./components/NavBar";
 import Dashboard from "./pages/dashboard";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import ModuleInfo from "./pages/moduleInfo";
 
 function App() {
     return (
@@ -12,6 +13,7 @@ function App() {
                     <NavBar />
                     <Routes>
                         <Route path="/" element={<Dashboard />} />
+                        <Route path="/module/:id" element={<ModuleInfo />} />
                     </Routes>
                 </BrowserRouter>
             </ThemeProvider>
