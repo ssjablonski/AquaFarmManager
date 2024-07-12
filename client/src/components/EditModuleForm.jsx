@@ -8,6 +8,7 @@ const validationSchema = Yup.object({
     targetTemperature: Yup.number()
         .required("Required")
         .min(0, "Must be at least 0")
+        .max(40, "Must be at most 40")
         .test("is-one-decimal", "Must be a number with at most one decimal place", value =>
             /^\d+(\.\d)?$/g.test(value.toString()),
         ),

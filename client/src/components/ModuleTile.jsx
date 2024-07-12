@@ -1,37 +1,62 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
 
 const ModuleTile = ({ id, name, targetTemp, available }) => {
+    const [currentTemp, setCurrentTemp] = useState(targetTemp);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const socket = io("http://localhost:3001", { transports: ["websocket"] });
+
+        socket.on("moduleUpdate", data => {
+            const moduleData = data.find(module => module.id === id);
+            if (moduleData) {
+                setCurrentTemp(moduleData.temperature);
+            }
+        });
+
+        return () => {
+            socket.disconnect();
+        };
+    }, [id]);
 
     const handleClick = () => {
         navigate(`/module/${id}`);
     };
 
+    const isTempInRange = Math.abs(currentTemp - targetTemp) <= 0.5;
+    const tempColorClass = isTempInRange
+        ? "bg-green-100 text-green-500"
+        : "bg-red-100 text-red-500";
+
     return (
         <div
             onClick={handleClick}
-            className={`flex min-h-32 w-full min-w-80 max-w-80 cursor-pointer rounded-lg p-2 dark:text-white ${
-                available
-                    ? "bg-gradient-to-r from-green-100 to-green-500 hover:from-green-200 hover:to-green-600 dark:bg-gradient-to-r dark:from-green-300 dark:to-green-700 dark:hover:from-green-400 dark:hover:to-green-800"
-                    : "bg-gradient-to-r from-red-100 to-red-600 hover:from-red-200 hover:to-red-700 dark:bg-gradient-to-r dark:from-red-300 dark:to-red-600 dark:hover:from-red-400 dark:hover:to-red-700"
-            }`}
+            className="min-w-72 cursor-pointer rounded-lg bg-gray-200 p-4 shadow-lg dark:bg-black-400"
         >
-            <div className="flex w-3/5 flex-col px-4">
-                <h1 className="py-2 text-2xl font-semibold">{name}</h1>
+            <h2 className="text-centerc p-2 text-2xl font-semibold">{name}</h2>
+            <div className="mt-2 flex justify-between gap-2">
                 {available ? (
-                    <p className="text-xl font-semibold">AVAILABLE</p>
+                    <div
+                        className={`flex items-center justify-center rounded-lg p-4 text-3xl font-bold ${tempColorClass} min-w-32`}
+                    >
+                        {currentTemp}°C
+                    </div>
                 ) : (
-                    <p className="text-xl font-semibold">NOT AVAILABLE</p>
+                    <div className="flex min-w-32 items-center justify-center rounded-lg bg-gray-300 p-4 text-3xl font-bold dark:bg-black-200">
+                        {currentTemp}°C
+                    </div>
                 )}
+                <div className="text-black flex min-h-32 min-w-32 items-center justify-center rounded-lg bg-white p-4 text-3xl font-bold dark:bg-black-300">
+                    {targetTemp}°C
+                </div>
             </div>
-            <div
-                className={`flex w-2/5 flex-col items-center justify-center rounded-lg p-6 md:w-2/5 ${
-                    available ? "bg-green-100 dark:bg-green-200" : "bg-red-100 dark:bg-red-200"
-                }`}
+            <p
+                className={`mt-2 text-center text-2xl font-semibold ${available ? "text-green-500" : "text-red-500"}`}
             >
-                <p className="text-5xl font-semibold">{targetTemp}</p>
-            </div>
+                {available ? "AVAILABLE" : "NOT AVAILABLE"}
+            </p>
         </div>
     );
 };

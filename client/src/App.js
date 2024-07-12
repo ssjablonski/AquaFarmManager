@@ -7,7 +7,7 @@ import ModuleInfo from "./pages/moduleInfo";
 
 function App() {
     return (
-        <div className="app dark:bg-black-500 min-h-screen">
+        <div className="app min-h-screen dark:bg-black-500 dark:text-white">
             <ThemeProvider>
                 <BrowserRouter>
                     <NavBar />
