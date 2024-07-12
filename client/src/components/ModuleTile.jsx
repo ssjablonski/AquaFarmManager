@@ -27,29 +27,32 @@ const ModuleTile = ({ id, name, targetTemp, available }) => {
 
     const isTempInRange = Math.abs(currentTemp - targetTemp) <= 0.5;
     const tempColorClass = isTempInRange
-        ? "bg-green-100 text-green-500"
-        : "bg-red-100 text-red-500";
+        ? "bg-green-100 text-green-500 dark:bg-green-200 dark:text-green-600"
+        : "bg-red-100 text-red-500 dark:bg-red-200 dark:text-red-600";
 
     return (
         <div
             onClick={handleClick}
             className="min-w-72 cursor-pointer rounded-lg bg-gray-200 p-4 shadow-lg dark:bg-black-400"
         >
-            <h2 className="text-centerc p-2 text-2xl font-semibold">{name}</h2>
+            <h2 className="p-2 text-center text-2xl font-semibold">{name}</h2>
             <div className="mt-2 flex justify-between gap-2">
                 {available ? (
                     <div
-                        className={`flex items-center justify-center rounded-lg p-4 text-3xl font-bold ${tempColorClass} min-w-32`}
+                        className={`flex flex-col items-center justify-around rounded-lg p-4 text-3xl font-bold ${tempColorClass} min-h-32 min-w-32`}
                     >
-                        {currentTemp}°C
+                        <p className="text-2xl">Actual:</p>
+                        <p className="text-center">{currentTemp}°C</p>
                     </div>
                 ) : (
-                    <div className="flex min-w-32 items-center justify-center rounded-lg bg-gray-300 p-4 text-3xl font-bold dark:bg-black-200">
-                        {currentTemp}°C
+                    <div className="flex min-h-32 min-w-32 flex-col items-center justify-around rounded-lg bg-gray-300 p-4 text-3xl font-bold dark:bg-black-200">
+                        <p className="text-2xl">Actual:</p>
+                        <p className="text-center">-°C</p>
                     </div>
                 )}
-                <div className="text-black flex min-h-32 min-w-32 items-center justify-center rounded-lg bg-white p-4 text-3xl font-bold dark:bg-black-300">
-                    {targetTemp}°C
+                <div className="text-black flex min-h-32 min-w-32 flex-col items-center justify-around rounded-lg bg-white p-4 text-3xl font-bold dark:bg-black-300 dark:text-white">
+                    <p className="text-2xl">Target:</p>
+                    <p className="text-center">{targetTemp}°C</p>
                 </div>
             </div>
             <p

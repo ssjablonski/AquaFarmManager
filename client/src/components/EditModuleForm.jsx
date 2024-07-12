@@ -25,33 +25,35 @@ const EditModuleForm = ({ initialValues, onSubmit, onClose }) => {
             >
                 <Form className="space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-800">Name</label>
+                        <label className="block text-sm font-medium text-black-600 dark:text-white">
+                            Name
+                        </label>
                         <Field
                             name="name"
                             type="text"
-                            className="mt-1 block w-full rounded-md border-gray-300 bg-white p-2 shadow-sm"
+                            className="mt-1 block w-full rounded-md bg-white p-2 shadow-sm dark:bg-black-300 dark:text-white"
                         />
                         <ErrorMessage name="name" component="div" className="text-red-600" />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">
+                        <label className="block text-sm font-medium text-black-600 dark:text-white">
                             Description
                         </label>
                         <Field
                             name="description"
                             type="text"
-                            className="mt-1 block w-full rounded-md border-gray-300 bg-white p-2 shadow-sm"
+                            className="mt-1 block w-full rounded-md border-gray-300 bg-white p-2 shadow-sm dark:bg-black-300 dark:text-white"
                         />
                         <ErrorMessage name="description" component="div" className="text-red-600" />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">
+                        <label className="block text-sm font-medium text-black-600 dark:text-white">
                             Target Temperature
                         </label>
                         <Field
                             name="targetTemperature"
                             type="number"
-                            className="mt-1 block w-full rounded-md border-gray-300 bg-white p-2 shadow-sm"
+                            className="mt-1 block w-full rounded-md border-gray-300 bg-white p-2 shadow-sm dark:bg-black-300 dark:text-white"
                         />
                         <ErrorMessage
                             name="targetTemperature"
@@ -69,7 +71,7 @@ const EditModuleForm = ({ initialValues, onSubmit, onClose }) => {
                         </button>
                         <button
                             type="submit"
-                            className="bg-black-600 hover:bg-black-400 rounded-lg px-4 py-2 text-white"
+                            className="rounded-lg bg-black-600 px-4 py-2 text-white hover:bg-black-400"
                         >
                             Save
                         </button>
