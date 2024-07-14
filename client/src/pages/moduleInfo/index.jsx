@@ -1,4 +1,3 @@
-// src/pages/moduleInfo/index.js
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Modal from "../../components/Modal";
@@ -6,6 +5,7 @@ import EditModuleForm from "../../components/EditModuleForm";
 import ModuleDetails from "../../components/ModuleDetails";
 import { io } from "socket.io-client";
 import axios from "axios";
+import ModuleHistory from "../../components/ModuleHistory";
 
 async function getModule(id) {
     const res = await fetch(`http://localhost:3001/modules/${id}`);
@@ -48,18 +48,18 @@ const ModuleInfo = () => {
     }
 
     const handleFormSubmit = async values => {
-        const res = await axios.patch(`http://localhost:3001/modules/${id}`, values);
-        console.log(res.data);
+        await axios.patch(`http://localhost:3001/modules/${id}`, values);
         setIsModalOpen(false);
     };
 
     return (
-        <>
+        <div className="container mx-auto h-full w-2/5 min-w-72 max-w-3xl">
             <ModuleDetails
                 module={module}
                 currentTemp={currentTemp}
                 onEditClick={() => setIsModalOpen(true)}
             />
+            <ModuleHistory id={id} />
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 <EditModuleForm
                     initialValues={{
@@ -71,7 +71,7 @@ const ModuleInfo = () => {
                     onClose={() => setIsModalOpen(false)}
                 />
             </Modal>
-        </>
+        </div>
     );
 };
 
