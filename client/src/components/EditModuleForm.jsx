@@ -14,7 +14,7 @@ const validationSchema = Yup.object({
         ),
 });
 
-const EditModuleForm = ({ initialValues, onSubmit, onClose }) => {
+const EditModuleForm = ({ initialValues, onSubmit }) => {
     return (
         <div>
             <h2 className="mb-4 text-center text-2xl font-bold">Edit Module Info</h2>
@@ -61,14 +61,7 @@ const EditModuleForm = ({ initialValues, onSubmit, onClose }) => {
                             className="text-red-600"
                         />
                     </div>
-                    <div className="flex justify-end space-x-4">
-                        <button
-                            type="button"
-                            onClick={onClose}
-                            className="rounded-lg bg-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-400"
-                        >
-                            Cancel
-                        </button>
+                    <div className="flex justify-center space-x-4">
                         <button
                             type="submit"
                             className="rounded-lg bg-black-600 px-4 py-2 text-white hover:bg-black-400"
