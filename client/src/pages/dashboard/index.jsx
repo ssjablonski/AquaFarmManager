@@ -3,7 +3,8 @@ import ModuleTile from "../../components/ModuleTile";
 import ModuleAvailbilityChart from "../../components/ModuleAvailabilityChart";
 import Modal from "../../components/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChartPie } from "@fortawesome/free-solid-svg-icons";
+import { faChartPie, faListUl, faTableCells } from "@fortawesome/free-solid-svg-icons";
+import ModuleList from "../../components/ModuleList";
 
 async function getModules() {
     const res = await fetch("http://localhost:3001/modules");
@@ -14,6 +15,8 @@ async function getModules() {
 function Dashboard() {
     const [modules, setModules] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [view, setView] = useState("tiles");
+    const [activeButton, setActiveButton] = useState("tiles");
 
     useEffect(() => {
         async function fetchData() {
@@ -34,23 +37,63 @@ function Dashboard() {
 
     return (
         <div className="container mx-auto my-6 flex flex-col items-center gap-4">
-            <div className="grid grid-cols-1 justify-center gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-                {modules.map(module => (
-                    <ModuleTile
-                        key={module.id}
-                        id={module.id}
-                        name={module.name}
-                        targetTemp={module.targetTemperature}
-                        available={module.available}
-                    />
-                ))}
+            <div className="container mx-auto flex justify-end px-10">
+                <div className="flex">
+                    <button
+                        onClick={() => {
+                            setView("tiles");
+                            setActiveButton("tiles");
+                        }}
+                        className={`${
+                            activeButton === "tiles"
+                                ? "bg-green-400 dark:bg-green-500"
+                                : "bg-gray-300 dark:bg-black-300"
+                        } rounded-l-lg p-2 px-4 text-2xl`}
+                    >
+                        <FontAwesomeIcon icon={faTableCells} />
+                    </button>
+                    <button
+                        onClick={() => {
+                            setView("list");
+                            setActiveButton("list");
+                        }}
+                        className={`${activeButton === "list" ? "bg-green-400 dark:bg-green-500" : "bg-gray-300 dark:bg-black-300"} rounded-r-lg p-2 px-4 text-2xl`}
+                    >
+                        <FontAwesomeIcon icon={faListUl} />
+                    </button>
+                </div>
             </div>
+            {view === "list" ? (
+                <ul className="container mx-auto flex w-full flex-col justify-center gap-4 md:w-2/3">
+                    {modules.map(module => (
+                        <ModuleList
+                            key={module.id}
+                            id={module.id}
+                            name={module.name}
+                            targetTemp={module.targetTemperature}
+                            available={module.available}
+                        />
+                    ))}
+                </ul>
+            ) : (
+                <div className="grid grid-cols-1 justify-center gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+                    {modules.map(module => (
+                        <ModuleTile
+                            key={module.id}
+                            id={module.id}
+                            name={module.name}
+                            targetTemp={module.targetTemperature}
+                            available={module.available}
+                        />
+                    ))}
+                </div>
+            )}
             <div>
                 <button
                     onClick={() => setIsModalOpen(true)}
-                    className="rounded-lg bg-green-400 p-4 hover:bg-green-300 dark:bg-green-500 dark:text-white dark:hover:bg-green-400"
+                    className="flex items-center rounded-lg bg-green-400 p-4 hover:bg-green-300 dark:bg-green-500 dark:text-white dark:hover:bg-green-400"
                 >
-                    View Stats
+                    <p className="text-lg font-semibold">View Stats</p>
                     <FontAwesomeIcon icon={faChartPie} className="ml-2" />
                 </button>
             </div>
