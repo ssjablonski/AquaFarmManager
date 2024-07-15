@@ -10,13 +10,13 @@ import {
     YAxis,
 } from "recharts";
 import axios from "axios";
-import { endOfToday, format, formatISO, startOfToday } from "date-fns";
+import { format, formatISO, startOfToday } from "date-fns";
 
 const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
         return (
             <div className="custom-tooltip rounded-lg bg-white p-4 dark:bg-black-300">
-                <p className="label">{`Time: ${label}`}</p>
+                <p className="label">{`Date: ${format(label, "yyyy-MM-dd HH:mm")}`}</p>
                 <p className="intro">{`Temperature: ${payload[0].value}°C`}</p>
             </div>
         );
@@ -28,7 +28,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 const ModuleHistory = ({ id }) => {
     const [historyData, setHistoryData] = useState([]);
     const [start, setStart] = useState(formatISO(startOfToday()));
-    const [stop, setStop] = useState(formatISO(endOfToday()));
+    const [stop, setStop] = useState(formatISO(new Date()));
     const [mode, setMode] = useState("hourly");
 
     useEffect(() => {
@@ -46,8 +46,22 @@ const ModuleHistory = ({ id }) => {
         fetchData();
     }, [id, start, stop, mode]);
 
-    const handleStartChange = e => setStart(formatISO(new Date(e.target.value)));
-    const handleStopChange = e => setStop(formatISO(new Date(e.target.value)));
+    const handleStartChange = e => {
+        const selectedDate = new Date(e.target.value);
+        const currentDate = new Date();
+        if (selectedDate < currentDate) {
+            setStart(formatISO(selectedDate));
+        }
+    };
+
+    const handleStopChange = e => {
+        const selectedDate = new Date(e.target.value);
+        const currentDate = new Date();
+        if (selectedDate < currentDate) {
+            setStop(formatISO(selectedDate));
+        }
+    };
+
     const handleModeChange = e => setMode(e.target.value);
 
     const formatDate = timestamp => {
@@ -59,6 +73,12 @@ const ModuleHistory = ({ id }) => {
         }
     };
 
+    const formatDateTimeLocal = date => {
+        const offset = date.getTimezoneOffset();
+        const adjustedDate = new Date(date.getTime() - offset * 60 * 1000);
+        return adjustedDate.toISOString().slice(0, 16);
+    };
+
     return (
         <div className="container mx-auto my-12 min-w-72 rounded-xl bg-gray-200 dark:bg-black-400 dark:text-white">
             <div className="mb-4 flex justify-evenly p-4">
@@ -66,12 +86,14 @@ const ModuleHistory = ({ id }) => {
                     type="datetime-local"
                     value={start.substring(0, 16)}
                     onChange={handleStartChange}
+                    max={formatDateTimeLocal(new Date())}
                     className="mr-2 rounded-lg border p-2 dark:bg-black-300"
                 />
                 <input
                     type="datetime-local"
                     value={stop.substring(0, 16)}
                     onChange={handleStopChange}
+                    max={formatDateTimeLocal(new Date())}
                     className="mr-2 rounded-lg border p-2 dark:bg-black-300"
                 />
                 <select

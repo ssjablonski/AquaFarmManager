@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChartPie, faListUl, faTableCells } from "@fortawesome/free-solid-svg-icons";
 import ModuleElement from "../../components/ModuleElement";
 import ModuleList from "../../components/ModuleList";
+import SearchBar from "../../components/SearchBar";
 
 async function getModules() {
     const res = await fetch("http://localhost:3001/modules");
@@ -18,6 +19,7 @@ function Dashboard() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [view, setView] = useState("tiles");
     const [activeButton, setActiveButton] = useState("tiles");
+    const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
         async function fetchData() {
@@ -28,8 +30,12 @@ function Dashboard() {
         fetchData();
     }, []);
 
-    const availableModules = modules.filter(module => module.available).length;
-    const unavailableModules = modules.length - availableModules;
+    const filteredModules = modules.filter(module =>
+        module.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
+    const availableModules = filteredModules.filter(module => module.available).length;
+    const unavailableModules = filteredModules.length - availableModules;
 
     const data = [
         { name: "Available", value: availableModules },
@@ -37,7 +43,7 @@ function Dashboard() {
     ];
 
     return (
-        <div className="container mx-auto my-6 flex flex-col items-center gap-4">
+        <div className="container mx-auto flex flex-col items-center gap-4 py-6">
             <div className="container mx-auto flex justify-end px-10">
                 <div className="flex">
                     <button
@@ -64,9 +70,10 @@ function Dashboard() {
                     </button>
                 </div>
             </div>
+            <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             {view === "list" ? (
                 <ModuleList>
-                    {modules.map(module => (
+                    {filteredModules.map(module => (
                         <ModuleElement
                             key={module.id}
                             id={module.id}
@@ -78,7 +85,7 @@ function Dashboard() {
                 </ModuleList>
             ) : (
                 <div className="grid grid-cols-1 justify-center gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-                    {modules.map(module => (
+                    {filteredModules.map(module => (
                         <ModuleTile
                             key={module.id}
                             id={module.id}
