@@ -4,6 +4,7 @@ import ModuleAvailbilityChart from "../../components/ModuleAvailabilityChart";
 import Modal from "../../components/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChartPie, faListUl, faTableCells } from "@fortawesome/free-solid-svg-icons";
+import ModuleElement from "../../components/ModuleElement";
 import ModuleList from "../../components/ModuleList";
 
 async function getModules() {
@@ -64,9 +65,9 @@ function Dashboard() {
                 </div>
             </div>
             {view === "list" ? (
-                <ul className="container mx-auto flex w-full flex-col justify-center gap-4 md:w-2/3">
+                <ModuleList>
                     {modules.map(module => (
-                        <ModuleList
+                        <ModuleElement
                             key={module.id}
                             id={module.id}
                             name={module.name}
@@ -74,7 +75,7 @@ function Dashboard() {
                             available={module.available}
                         />
                     ))}
-                </ul>
+                </ModuleList>
             ) : (
                 <div className="grid grid-cols-1 justify-center gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
                     {modules.map(module => (
