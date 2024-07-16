@@ -40,11 +40,4 @@ cd JobBoard
 docker compose up
 ```
 
-3. Przejdz do katalogu client oraz zainstaluj zależności:
-
-```bash
-cd client
-npm install
-```
-
 3. Gotowe! Projekt znajdziesz pod `localhost:3000`
