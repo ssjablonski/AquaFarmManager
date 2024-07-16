@@ -11,7 +11,7 @@ const ModuleDetails = ({ module, currentTemp, onEditClick }) => {
     return (
         <div className="container mx-auto my-6 flex flex-col items-center justify-center gap-4 rounded-lg bg-gray-200 p-4 dark:bg-black-400 dark:text-white">
             <h1 className="text-center text-2xl font-semibold sm:text-3xl">{module.name}</h1>
-            <div className="container flex w-full flex-row justify-evenly gap-2 rounded-xl bg-gray-100 p-2 dark:bg-black-300 md:bg-red-200 lg:bg-blue-200 lg:p-6">
+            <div className="container flex w-full flex-row justify-evenly gap-2 rounded-xl bg-gray-100 p-2 dark:bg-black-300 lg:p-6">
                 {module.available ? (
                     <div
                         className={`flex w-1/3 flex-col items-center justify-around rounded-lg p-4 text-2xl font-bold sm:py-12 md:text-5xl lg:w-2/3 ${tempColorClass}`}

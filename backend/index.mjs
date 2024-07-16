@@ -33,6 +33,22 @@ const modules = [
         available: true,
         targetTemperature: 20.0,
     },
+    {
+        id: "4d0aa62c-b1a9-489d-b4a2-fc16b878ba48",
+        name: "Hydroponic module 4",
+        description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla aliquet enim tortor at auctor.",
+        available: false,
+        targetTemperature: 12,
+    },
+    {
+        id: "d4928094-8ef8-48be-823a-4cddef643212",
+        name: "Hydroponic module 5",
+        description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Diam in arcu cursus euismod quis viverra nibh cras.",
+        available: true,
+        targetTemperature: 21.0,
+    },
 ];
 
 app.get("/ping", (_, res) => {
