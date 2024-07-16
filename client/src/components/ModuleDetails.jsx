@@ -1,3 +1,5 @@
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 const ModuleDetails = ({ module, currentTemp, onEditClick }) => {
@@ -7,28 +9,28 @@ const ModuleDetails = ({ module, currentTemp, onEditClick }) => {
         : "bg-red-100 text-red-500 dark:bg-red-200 dark:text-red-600";
 
     return (
-        <div className="container mx-auto my-6 flex flex-col items-center justify-center gap-4 rounded-lg bg-gray-200 p-4 dark:bg-black-400 dark:text-white xl:max-w-5xl">
-            <h1 className="mb-4 text-center text-4xl font-semibold">{module.name}</h1>
-            <div className="container mx-auto flex w-full min-w-60 flex-col gap-2 rounded-xl bg-gray-100 p-4 dark:bg-black-300 lg:flex-row">
+        <div className="container mx-auto my-6 flex flex-col items-center justify-center gap-4 rounded-lg bg-gray-200 p-4 dark:bg-black-400 dark:text-white">
+            <h1 className="text-center text-2xl font-semibold sm:text-3xl">{module.name}</h1>
+            <div className="container flex w-full flex-row justify-evenly gap-2 rounded-xl bg-gray-100 p-2 dark:bg-black-300 md:bg-red-200 lg:bg-blue-200 lg:p-6">
                 {module.available ? (
                     <div
-                        className={`mx-auto flex min-h-52 flex-col items-center justify-around rounded-lg p-12 text-3xl font-bold ${tempColorClass} w-full lg:w-1/2`}
+                        className={`flex w-1/3 flex-col items-center justify-around rounded-lg p-4 text-2xl font-bold sm:py-12 md:text-5xl lg:w-2/3 ${tempColorClass}`}
                     >
-                        <p className="text-5xl">Actual:</p>
-                        <p className="text-center text-5xl">{currentTemp}°C</p>
+                        <p>Actual:</p>
+                        <p>{currentTemp}°C</p>
                     </div>
                 ) : (
-                    <div className="mx-auto flex min-h-52 w-full min-w-5 flex-col items-center justify-around rounded-lg bg-gray-300 p-12 text-3xl font-bold dark:bg-black-200 lg:w-1/2">
-                        <p className="text-5xl">Actual:</p>
-                        <p className="text-center text-5xl">-°C</p>
+                    <div className="flex w-1/3 flex-col items-center justify-around rounded-lg bg-gray-300 p-4 text-2xl font-bold dark:bg-black-200 sm:py-12 md:text-5xl lg:w-2/3">
+                        <p>Actual:</p>
+                        <p>-°C</p>
                     </div>
                 )}
-                <div className="text-black mx-auto flex min-h-52 w-full min-w-5 flex-col items-center justify-around rounded-lg bg-white p-12 text-3xl font-bold dark:bg-black-200 dark:text-white lg:w-1/2">
-                    <p className="text-5xl">Target:</p>
-                    <p className="text-center text-5xl">{module.targetTemperature}°C</p>
+                <div className="text-black flex w-1/3 flex-col items-center justify-around rounded-lg bg-white p-4 text-2xl font-bold dark:bg-black-100 dark:text-white sm:py-12 md:text-5xl lg:w-2/3">
+                    <p>Target:</p>
+                    <p>{module.targetTemperature}°C</p>
                 </div>
             </div>
-            <div className="container mx-auto flex w-full justify-center rounded-lg bg-gray-100 p-4 text-xl dark:bg-black-300 lg:text-2xl">
+            <div className="flex w-full justify-center rounded-lg bg-gray-100 p-4 text-xl dark:bg-black-300 lg:text-2xl">
                 <p>{module.description}</p>
             </div>
             <p
@@ -42,13 +44,24 @@ const ModuleDetails = ({ module, currentTemp, onEditClick }) => {
                     className={`mt-2 justify-center rounded-lg p-2 px-8 text-xl ${
                         module.available
                             ? "bg-green-500 text-white hover:bg-green-300"
-                            : "cursor-not-allowed bg-gray-300 text-gray-500"
+                            : "cursor-not-allowed bg-gray-100 text-gray-500 dark:bg-black-100"
                     }`}
                     onClick={onEditClick}
                 >
                     Edit
                 </button>
             </div>
+            {!module.available ? (
+                <div className="flex w-full items-center rounded-xl bg-gray-300 p-2 dark:bg-black-300 sm:w-1/2">
+                    <FontAwesomeIcon
+                        icon={faCircleInfo}
+                        className="pr-2 text-3xl text-gray-600 dark:text-white"
+                    />
+                    <p className="text-center text-gray-600 dark:text-white">
+                        You cannot edit this module. Click the logo to return to the main page.
+                    </p>
+                </div>
+            ) : null}
         </div>
     );
 };

@@ -43,9 +43,13 @@ function Dashboard() {
     ];
 
     return (
-        <div className="container mx-auto flex flex-col items-center gap-4 py-6">
-            <div className="container mx-auto flex justify-end px-10">
-                <div className="flex">
+        <div className="container mx-auto flex flex-col items-center gap-2 py-6">
+            <div className="grid w-3/4 gap-2 sm:w-4/5 sm:grid-cols-3 md:w-2/3">
+                <div className="hidden sm:block"></div>
+                <div className="col-span-3 flex justify-center sm:col-span-1">
+                    <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+                </div>
+                <div className="col-span-3 flex justify-end px-2 sm:col-span-1">
                     <button
                         onClick={() => {
                             setView("tiles");
@@ -55,7 +59,7 @@ function Dashboard() {
                             activeButton === "tiles"
                                 ? "bg-green-400 dark:bg-green-500"
                                 : "bg-gray-300 dark:bg-black-300"
-                        } rounded-l-lg p-2 px-4 text-2xl`}
+                        } rounded-l-lg p-2 px-4 text-lg md:text-2xl`}
                     >
                         <FontAwesomeIcon icon={faTableCells} />
                     </button>
@@ -64,13 +68,16 @@ function Dashboard() {
                             setView("list");
                             setActiveButton("list");
                         }}
-                        className={`${activeButton === "list" ? "bg-green-400 dark:bg-green-500" : "bg-gray-300 dark:bg-black-300"} rounded-r-lg p-2 px-4 text-2xl`}
+                        className={`${
+                            activeButton === "list"
+                                ? "bg-green-400 dark:bg-green-500"
+                                : "bg-gray-300 dark:bg-black-300"
+                        } rounded-r-lg p-2 px-4 text-lg md:text-2xl`}
                     >
                         <FontAwesomeIcon icon={faListUl} />
                     </button>
                 </div>
             </div>
-            <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             {view === "list" ? (
                 <ModuleList>
                     {filteredModules.map(module => (

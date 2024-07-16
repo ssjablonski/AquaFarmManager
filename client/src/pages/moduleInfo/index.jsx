@@ -53,7 +53,7 @@ const ModuleInfo = () => {
     };
 
     return (
-        <div className="container mx-auto h-full w-2/5 min-w-72 max-w-3xl">
+        <div className="container mx-auto h-full w-5/6 min-w-72 max-w-3xl pb-2">
             <ModuleDetails
                 module={module}
                 currentTemp={currentTemp}

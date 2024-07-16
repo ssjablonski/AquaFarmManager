@@ -39,7 +39,7 @@ const ModuleElement = ({ id, name, targetTemp, available }) => {
             <h2 className="sm:text-md w-full text-center text-sm font-semibold sm:w-1/4 md:text-lg lg:text-2xl">
                 {name}
             </h2>
-            <div className="flex w-full flex-row justify-center gap-4 sm:w-2/4">
+            <div className="flex w-full flex-row justify-center gap-4 p-1 sm:w-2/4">
                 {available ? (
                     <div
                         className={`text-md flex flex-col items-center rounded-lg p-2 font-bold md:text-2xl lg:text-3xl ${tempColorClass} w-full min-w-16 sm:w-1/2`}
