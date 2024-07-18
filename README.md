@@ -30,8 +30,8 @@ AquaFarmMenager to aplikacja do zarządzania modułami IOT farmy akwaponicznej k
 1. Sklonuj repozytorium:
 
 ```bash
-git clone https://github.com/ssjablonski/JobBoard.git
-cd JobBoard
+git clone https://github.com/ssjablonski/AquaFarmManager.git
+cd AquaFarmManager
 ```
 
 2. Znajdując się w głównym katalogu projektu wykonaj:
